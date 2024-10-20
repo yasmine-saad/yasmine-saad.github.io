@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="cart.component.css">
+</head>
+
+<body>
+
+    <!-- Cart Header -->
+    <div class="page-header">
+        <h1><i class="fas fa-shopping-cart"></i> Your Cart</h1>
+    </div>
+
+    <div class="container cart-container">
+        <!-- Empty Cart Message -->
+        <div class="empty-cart-message">
+            <i class="fas fa-info-circle"></i> Your cart is currently empty.
+            <br>
+            <small>Start adding courses to invest in your future!</small>
+        </div>
+
+        <!-- First Course -->
+        <div class="cart-course row">
+            <div class="col-md-3">
+                <img src="https://via.placeholder.com/100" alt="Course 1 Image" class="img-fluid">
+            </div>
+            <div class="col-md-9 course-details">
+                <h5>
+                    <a href="#" class="course-name">Web Development Bootcamp</a>
+                </h5>
+                <p>Instructor: John Doe</p>
+                <p class="font-weight-bold">$49.99</p>
+                <p><a href="#" class="remove-course"><i class="fas fa-trash"></i> Remove</a></p>
+            </div>
+        </div>
+
+        <!-- Second Course -->
+        <div class="cart-course row">
+            <div class="col-md-3">
+                <img src="https://via.placeholder.com/100" alt="Course 2 Image" class="img-fluid">
+            </div>
+            <div class="col-md-9 course-details">
+                <h5>
+                    <a href="#" class="course-name">Advanced JavaScript</a>
+                </h5>
+                <p>Instructor: Jane Smith</p>
+                <p class="font-weight-bold">$69.99</p>
+                <p><a href="#" class="remove-course"><i class="fas fa-trash"></i> Remove</a></p>
+            </div>
+        </div>
+
+        <!-- Cart Total -->
+        <div class="cart-total">
+            <p>Total: $119.98</p>
+        </div>
+
+        <!-- Cart Buttons -->
+        <div class="cart-btns">
+            <a href="#" class="btn btn-outline-secondary"><i class="fas fa-arrow-left"></i> Continue Shopping</a>
+            <a href="#" class="btn btn-primary"><i class="fas fa-credit-card"></i> Checkout</a>
+        </div>
+
+        <!-- Upgrade to Annual Subscription Section -->
+        <div class="offer-card card mt-4">
+            <h5><i class="fas fa-arrow-up"></i> Upgrade to Annual Subscription</h5>
+            <p>Get access to all courses for a whole year at a discounted price!</p>
+            <a href="#" class="btn btn-success"><i class="fas fa-arrow-up"></i> Upgrade Now</a>
+        </div>
+    </div>
+
+    <!-- Custom ts -->
+    <script src="cart.component.ts"></script>
+    <script>document.addEventListener('DOMContentLoaded', function () {
+            const emptyCartMessage = document.querySelector('.empty-cart-message');
+            const cartCourses = document.querySelectorAll('.cart-course');
+
+            document.querySelectorAll('.remove-course').forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    this.closest('.cart-course').remove();
+
+                    // Check if any courses remain in the cart
+                    if (document.querySelectorAll('.cart-course').length === 0) {
+                        emptyCartMessage.classList.add('show');
+                    }
+                });
+            });
+
+            // If cart is already empty, show the message
+            if (cartCourses.length === 0) {
+                emptyCartMessage.classList.add('show');
+            }
+        });
+    </script>
+</body>
+
+</html>
