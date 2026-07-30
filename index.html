@@ -1,137 +1,785 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yasmine Saad Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles2.css">
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yasmine Saad — Angular Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #0b0e14;
+  --surface: #10141c;
+  --surface2: #161b26;
+  --teal: #2dd4bf;
+  --teal-dim: rgba(45,212,191,0.09);
+  --teal-glow: rgba(45,212,191,0.16);
+  --gold: #f0a842;
+  --violet: #8b93f5;
+  --text: #dde3ec;
+  --muted: #94a3b8;
+  --border: rgba(255,255,255,0.07);
+  --shadow: rgba(0,0,0,0.35);
+}
+:root[data-theme="light"] {
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --surface2: #f0f3f6;
+  --teal: #0d9488;
+  --teal-dim: rgba(13,148,136,0.08);
+  --teal-glow: rgba(13,148,136,0.15);
+  --gold: #b45309;
+  --violet: #6366f1;
+  --text: #1e293b;
+  --muted: #5c6b7f;
+  --border: rgba(15,23,42,0.08);
+  --shadow: rgba(15,23,42,0.07);
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; transition: background .35s ease, color .35s ease; }
+body::before {
+  content: ''; position: fixed; inset: 0;
+  background-image: linear-gradient(rgba(45,212,191,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(45,212,191,0.02) 1px,transparent 1px);
+  background-size: 72px 72px; pointer-events: none; z-index: 0;
+}
+:root[data-theme="light"] body::before { background-image: linear-gradient(rgba(13,148,136,0.035) 1px,transparent 1px),linear-gradient(90deg,rgba(13,148,136,0.035) 1px,transparent 1px); }
+nav, .stat-card, .highlight-item, .skill-group, .skill-tag, .project-card, .stack-tag, .exp-item, .edu-card, .cert-card, .cert-tag, .contact-link, .form-input, .form-textarea, .btn-outline, .metric, .project-badge {
+  transition: background .3s ease, border-color .3s ease, color .3s ease, box-shadow .3s ease, transform .25s ease;
+}
 
-<body class="dark-mode">
-    <!-- Navbar -->
-    <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
-        <div class="container">
-            <a class="navbar-brand" href="#">Yasmine Saad</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                </ul>
-            </div>
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 22px 60px; display: flex; align-items: center; justify-content: space-between;
+  background: rgba(7,9,15,0.88); backdrop-filter: blur(18px); border-bottom: 1px solid var(--border);
+}
+.logo { font-family:'DM Mono',monospace; font-size:.82rem; color:var(--teal); letter-spacing:2px; text-transform:uppercase; text-decoration:none; }
+.nav-links { display:flex; gap:36px; list-style:none; }
+.nav-links a { font-family:'DM Mono',monospace; font-size:.72rem; color:var(--muted); text-decoration:none; letter-spacing:1.5px; text-transform:uppercase; transition:color .2s; position:relative; }
+.nav-links a::after { content:''; position:absolute; bottom:-3px; left:0; right:0; height:1px; background:var(--teal); transform:scaleX(0); transition:transform .2s; transform-origin:left; }
+.nav-links a:hover { color:var(--teal); }
+.nav-links a:hover::after { transform:scaleX(1); }
+.nav-cta { background:var(--teal) !important; color:var(--bg) !important; padding:9px 20px; border-radius:4px; font-weight:600 !important; }
+.nav-cta::after { display:none !important; }
+.nav-right { display:flex; align-items:center; gap:28px; }
+.theme-toggle {
+  display:flex; align-items:center; justify-content:center; width:36px; height:36px;
+  border-radius:50%; border:1px solid var(--border); background:var(--surface); color:var(--teal);
+  cursor:pointer; transition:border-color .2s,transform .2s,background .3s;
+}
+.theme-toggle:hover { border-color:var(--teal); transform:translateY(-1px); }
+.theme-toggle .icon-moon { display:none; }
+:root[data-theme="light"] .theme-toggle .icon-sun { display:none; }
+:root[data-theme="light"] .theme-toggle .icon-moon { display:block; }
+
+/* HERO */
+.hero { position:relative; z-index:1; min-height:100vh; display:flex; align-items:center; padding:120px 60px 80px; max-width:1200px; margin:0 auto; }
+.hero-grid { display:grid; grid-template-columns:1.1fr 0.9fr; gap:80px; align-items:center; width:100%; }
+.hero-label { font-family:'DM Mono',monospace; font-size:.7rem; letter-spacing:3px; text-transform:uppercase; color:var(--teal); margin-bottom:22px; display:flex; align-items:center; gap:12px; animation:fadeUp .7s ease both; }
+.hero-label::before { content:''; display:inline-block; width:36px; height:1px; background:var(--teal); }
+h1 { font-family:'Playfair Display',serif; font-size:clamp(3.2rem,5.5vw,5.5rem); font-weight:900; line-height:1.04; letter-spacing:-2px; margin-bottom:16px; animation:fadeUp .7s .08s ease both; }
+h1 em { font-style:italic; color:var(--teal); }
+.hero-role { font-family:'DM Mono',monospace; font-size:.82rem; color:var(--gold); letter-spacing:2px; text-transform:uppercase; margin-bottom:28px; animation:fadeUp .7s .14s ease both; }
+.hero-desc { font-size:1.02rem; color:var(--muted); line-height:1.8; font-weight:300; margin-bottom:40px; animation:fadeUp .7s .2s ease both; }
+.hero-actions { display:flex; gap:14px; flex-wrap:wrap; animation:fadeUp .7s .26s ease both; }
+.btn { padding:13px 28px; border-radius:4px; font-size:.88rem; font-family:'Outfit',sans-serif; font-weight:500; text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:all .2s; cursor:pointer; border:none; }
+.btn-primary { background:var(--teal); color:var(--bg); font-weight:600; box-shadow:0 0 28px var(--teal-glow); }
+.btn-primary:hover { transform:translateY(-2px); box-shadow:0 0 48px var(--teal-glow); }
+.btn-outline { background:transparent; color:var(--text); border:1px solid var(--border); }
+.btn-outline:hover { border-color:var(--teal); color:var(--teal); }
+.stat-stack { display:flex; flex-direction:column; gap:14px; animation:fadeUp .7s .32s ease both; }
+.stat-card { background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--teal); border-radius:8px; padding:18px 22px; transition:transform .25s,box-shadow .25s; }
+.stat-card:hover { transform:translateX(8px); box-shadow:-6px 0 24px var(--teal-dim); }
+.stat-card:nth-child(2) { border-left-color:var(--gold); margin-left:28px; }
+.stat-card:nth-child(3) { border-left-color:var(--violet); margin-left:56px; }
+.stat-card:nth-child(4) { border-left-color:#34d399; margin-left:28px; }
+.stat-num { font-family:'Playfair Display',serif; font-size:2rem; font-weight:700; color:var(--teal); line-height:1; }
+.stat-card:nth-child(2) .stat-num { color:var(--gold); }
+.stat-card:nth-child(3) .stat-num { color:var(--violet); }
+.stat-card:nth-child(4) .stat-num { color:#34d399; }
+.stat-label { font-size:.8rem; color:var(--muted); margin-top:4px; font-weight:300; }
+
+/* SECTIONS */
+.section { position:relative; z-index:1; max-width:1200px; margin:0 auto; padding:100px 60px; }
+.section-tag { font-family:'DM Mono',monospace; font-size:.68rem; letter-spacing:3px; text-transform:uppercase; color:var(--teal); display:flex; align-items:center; gap:12px; margin-bottom:18px; }
+.section-tag::before { content:''; display:inline-block; width:30px; height:1px; background:var(--teal); }
+h2 { font-family:'Playfair Display',serif; font-size:clamp(2rem,3.5vw,3rem); font-weight:700; letter-spacing:-1px; margin-bottom:60px; line-height:1.1; }
+.divider { width:100%; height:1px; background:linear-gradient(90deg,transparent,var(--border),transparent); }
+
+/* ABOUT */
+.about-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
+.about-text p { font-size:1rem; color:var(--muted); line-height:1.9; font-weight:300; margin-bottom:20px; }
+.about-text p strong { color:var(--text); font-weight:500; }
+.about-text p em { color:var(--teal); font-style:normal; }
+.about-highlights { display:flex; flex-direction:column; gap:16px; }
+.highlight-item { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:20px 22px; display:flex; align-items:flex-start; gap:16px; transition:border-color .2s; }
+.highlight-item:hover { border-color:rgba(45,212,191,.3); }
+.highlight-icon { font-size:1.4rem; min-width:36px; }
+.highlight-title { font-size:.9rem; font-weight:600; color:var(--text); margin-bottom:4px; }
+.highlight-desc { font-size:.82rem; color:var(--muted); line-height:1.5; }
+
+/* SKILLS */
+.skills-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.skill-group { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:28px 24px; transition:border-color .2s,transform .2s; }
+.skill-group:hover { border-color:rgba(45,212,191,.25); transform:translateY(-3px); }
+.skill-group-title { font-family:'DM Mono',monospace; font-size:.68rem; letter-spacing:2px; text-transform:uppercase; color:var(--teal); margin-bottom:18px; padding-bottom:12px; border-bottom:1px solid var(--border); }
+.skill-tags { display:flex; flex-wrap:wrap; gap:8px; }
+.skill-tag { background:var(--teal-dim); border:1px solid rgba(45,212,191,.15); color:var(--text); padding:5px 12px; border-radius:100px; font-size:.78rem; transition:background .2s; }
+.skill-tag:hover { background:rgba(45,212,191,.2); }
+.skill-tag.gold { background:rgba(245,158,11,.1); border-color:rgba(245,158,11,.2); color:var(--gold); }
+.skill-tag.violet { background:rgba(129,140,248,.1); border-color:rgba(129,140,248,.2); color:var(--violet); }
+
+/* PROJECTS */
+.projects-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+.project-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:32px; position:relative; overflow:hidden; transition:transform .25s,border-color .25s,box-shadow .25s; display:flex; flex-direction:column; }
+.project-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--teal),var(--violet)); transform:scaleX(0); transform-origin:left; transition:transform .3s; }
+.project-card:hover { transform:translateY(-5px); border-color:rgba(45,212,191,.2); box-shadow:0 20px 60px var(--shadow); }
+.project-card:hover::before { transform:scaleX(1); }
+.project-card.featured { grid-column:span 2; display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center; }
+.project-num { font-family:'Playfair Display',serif; font-size:3.5rem; font-weight:700; color:rgba(45,212,191,.1); line-height:1; margin-bottom:16px; }
+.project-name { font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:700; color:var(--text); margin-bottom:12px; }
+.project-desc { font-size:.9rem; color:var(--muted); line-height:1.7; font-weight:300; margin-bottom:20px; flex:1; }
+.project-stack { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:24px; }
+.stack-tag { background:var(--surface2); border:1px solid var(--border); color:var(--muted); padding:4px 10px; border-radius:4px; font-family:'DM Mono',monospace; font-size:.68rem; }
+.project-links { display:flex; gap:10px; flex-wrap:wrap; margin-top:auto; }
+.project-link { font-family:'DM Mono',monospace; font-size:.7rem; letter-spacing:1px; text-transform:uppercase; text-decoration:none; display:inline-flex; align-items:center; gap:7px; padding:9px 16px; border-radius:6px; border:1px solid var(--border); color:var(--text); transition:border-color .2s,background .2s,transform .2s,color .2s; }
+.project-link svg { width:14px; height:14px; flex-shrink:0; }
+.project-link:hover { border-color:var(--teal); color:var(--teal); transform:translateY(-2px); }
+.project-link.primary { background:var(--teal-dim); border-color:rgba(45,212,191,.25); color:var(--teal); }
+.project-link.primary:hover { background:var(--teal-glow); }
+.project-name-row { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:12px; }
+.project-name-row .project-name { margin-bottom:0; }
+.project-badge { font-size:.65rem; padding:3px 10px; border-radius:100px; background:rgba(45,212,191,.1); color:var(--teal); font-family:'DM Mono',monospace; letter-spacing:.5px; text-transform:uppercase; white-space:nowrap; }
+.project-badge.study { background:rgba(129,140,248,.12); color:var(--violet); }
+.project-badge.ongoing { background:rgba(245,158,11,.1); color:var(--gold); }
+.project-badge.client { background:rgba(45,212,191,.1); color:var(--teal); }
+.projects-subhead { display:flex; align-items:baseline; gap:14px; margin:56px 0 22px; }
+.projects-subhead h3 { font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:700; color:var(--text); }
+.projects-subhead span { font-size:.82rem; color:var(--muted); font-weight:300; }
+.project-metrics { display:flex; flex-direction:column; gap:16px; }
+.metric { display:flex; align-items:center; gap:14px; padding:14px 18px; background:var(--bg); border:1px solid var(--border); border-radius:8px; }
+.metric-icon { font-size:1.2rem; }
+.metric-value { font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:700; color:var(--teal); }
+.metric-desc { font-size:.78rem; color:var(--muted); }
+
+/* EXPERIENCE */
+.exp-item { display:grid; grid-template-columns:200px 1fr; gap:40px; padding:36px 0; border-bottom:1px solid var(--border); }
+.exp-item:last-child { border-bottom:none; }
+.exp-date { font-family:'DM Mono',monospace; font-size:.75rem; color:var(--muted); padding-top:4px; line-height:1.6; }
+.exp-date strong { display:block; color:var(--teal); margin-bottom:4px; font-size:.7rem; letter-spacing:1px; }
+.exp-title { font-family:'Playfair Display',serif; font-size:1.25rem; font-weight:700; color:var(--text); margin-bottom:4px; }
+.exp-company { font-size:.85rem; color:var(--gold); margin-bottom:14px; font-weight:500; }
+.exp-bullets { list-style:none; display:flex; flex-direction:column; gap:8px; }
+.exp-bullets li { font-size:.9rem; color:var(--muted); line-height:1.6; font-weight:300; padding-left:18px; position:relative; }
+.exp-bullets li::before { content:'▸'; position:absolute; left:0; color:var(--teal); font-size:.7rem; top:2px; }
+.exp-bullets li strong { color:var(--teal); font-weight:500; }
+
+/* CERTS */
+.edu-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:28px 32px; margin-bottom:32px; display:flex; align-items:center; gap:24px; }
+.edu-icon { font-size:2.5rem; }
+.edu-title { font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:700; color:var(--text); margin-bottom:6px; }
+.edu-sub { font-size:.85rem; color:var(--gold); margin-bottom:10px; }
+.edu-tags { display:flex; flex-wrap:wrap; gap:6px; }
+.edu-tag { font-size:.72rem; color:var(--muted); background:var(--surface2); border:1px solid var(--border); padding:3px 10px; border-radius:100px; }
+.certs-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.cert-card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:20px; transition:border-color .2s,transform .2s; display:block; text-decoration:none; color:inherit; }
+.cert-card:hover { border-color:rgba(45,212,191,.25); }
+a.cert-card:hover { transform:translateY(-3px); border-color:var(--teal); }
+.cert-view { display:flex; align-items:center; gap:5px; font-family:'DM Mono',monospace; font-size:.66rem; letter-spacing:.5px; text-transform:uppercase; color:var(--teal); margin-top:10px; }
+.cert-view svg { width:11px; height:11px; }
+.cert-org { font-family:'DM Mono',monospace; font-size:.65rem; letter-spacing:1.5px; text-transform:uppercase; color:var(--teal); margin-bottom:8px; }
+.cert-name { font-size:.88rem; color:var(--text); font-weight:500; line-height:1.4; }
+.cert-badge { display:inline-block; margin-top:10px; font-size:.68rem; padding:3px 9px; border-radius:100px; background:rgba(45,212,191,.1); color:var(--teal); font-family:'DM Mono',monospace; }
+.cert-badge.ongoing { background:rgba(245,158,11,.1); color:var(--gold); }
+
+/* CONTACT */
+.contact-wrapper { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
+.contact-intro p { font-size:1rem; color:var(--muted); line-height:1.8; font-weight:300; margin-bottom:32px; }
+.contact-links { display:flex; flex-direction:column; gap:14px; }
+.contact-link { display:flex; align-items:center; gap:16px; padding:16px 20px; background:var(--surface); border:1px solid var(--border); border-radius:8px; text-decoration:none; transition:border-color .2s,transform .2s; }
+.contact-link:hover { border-color:rgba(45,212,191,.3); transform:translateX(5px); }
+.contact-link-icon { width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; background:var(--teal-dim); color:var(--teal); }
+.contact-link-icon svg { width:20px; height:20px; }
+.contact-link.linkedin .contact-link-icon { background:rgba(129,140,248,.12); color:var(--violet); }
+.contact-link.github .contact-link-icon { background:var(--surface2); color:var(--text); }
+.contact-link.whatsapp .contact-link-icon { background:rgba(245,158,11,.12); color:var(--gold); }
+.contact-link-text { font-size:.88rem; color:var(--text); }
+.contact-link-sub { font-size:.75rem; color:var(--muted); margin-top:2px; }
+.platform-heading { font-family:'DM Mono',monospace; font-size:.68rem; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin:28px 0 14px; }
+.platform-row { display:flex; gap:16px; flex-wrap:wrap; }
+.platform-badge { display:flex; flex-direction:column; align-items:center; gap:7px; text-decoration:none; width:64px; }
+.platform-badge-circle { width:46px; height:46px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:var(--surface); border:1px solid var(--border); font-family:'DM Mono',monospace; font-weight:600; font-size:.76rem; letter-spacing:.5px; color:var(--teal); }
+.platform-badge:hover .platform-badge-circle { border-color:var(--teal); transform:translateY(-3px); }
+.platform-badge-label { font-size:.66rem; color:var(--muted); text-align:center; line-height:1.3; }
+.contact-form { display:flex; flex-direction:column; gap:16px; }
+.form-group { display:flex; flex-direction:column; gap:7px; }
+.form-label { font-family:'DM Mono',monospace; font-size:.68rem; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); }
+.form-input,.form-textarea { background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:12px 16px; font-size:.9rem; font-family:'Outfit',sans-serif; color:var(--text); outline:none; transition:border-color .2s; }
+.form-input:focus,.form-textarea:focus { border-color:rgba(45,212,191,.4); }
+.form-textarea { resize:vertical; min-height:120px; }
+
+/* FOOTER */
+.footer-inner { position:relative; z-index:1; border-top:1px solid var(--border); padding:32px 60px; max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; }
+.footer-copy { font-family:'DM Mono',monospace; font-size:.7rem; color:var(--muted); letter-spacing:1px; }
+.footer-social { display:flex; gap:20px; }
+.social-link { font-family:'DM Mono',monospace; font-size:.68rem; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); text-decoration:none; transition:color .2s; display:inline-flex; align-items:center; gap:7px; }
+.social-link svg { width:14px; height:14px; }
+.social-link:hover { color:var(--teal); }
+
+/* ANIMATIONS */
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+.reveal { opacity:0; transform:translateY(30px); transition:opacity .7s ease,transform .7s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+.reveal-d1 { transition-delay:.1s; }
+.reveal-d2 { transition-delay:.2s; }
+.reveal-d3 { transition-delay:.3s; }
+
+/* PROGRESS */
+.progress-bar { position:fixed; top:0; left:0; height:2px; background:var(--teal); z-index:200; width:0; box-shadow:0 0 8px var(--teal-glow); transition:width .1s; }
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{padding:18px 24px;}
+  .nav-links{gap:16px;}
+  .nav-links li:not(:last-child){display:none;}
+  .hero{padding:100px 24px 60px;}
+  .hero-grid{grid-template-columns:1fr;gap:50px;}
+  .section{padding:70px 24px;}
+  .about-grid,.contact-wrapper{grid-template-columns:1fr;gap:40px;}
+  .skills-grid{grid-template-columns:1fr;}
+  .projects-grid{grid-template-columns:1fr;}
+  .project-card.featured{grid-column:span 1;display:flex;flex-direction:column;}
+  .exp-item{grid-template-columns:1fr;gap:8px;}
+  .certs-grid{grid-template-columns:1fr 1fr;}
+  .footer-inner{flex-direction:column;gap:16px;text-align:center;padding:24px;}
+}
+</style>
+</head>
+<body>
+<script>
+  // [ARCH]: runs before paint to avoid a flash of the wrong theme; dark is the default
+  (function() {
+    var saved = localStorage.getItem('ys-theme');
+    document.documentElement.setAttribute('data-theme', saved === 'light' ? 'light' : 'dark');
+  })();
+</script>
+
+<div class="progress-bar" id="progress"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">YS.</a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact" class="nav-cta">Hire Me</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme" title="Toggle theme">
+      <svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
+      <svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-label">Open to remote work · Worldwide</div>
+      <h1>Yasmine<br><em>Saad.</em></h1>
+      <div class="hero-role">Frontend Angular Developer · Biotechnology Background</div>
+      <p class="hero-desc">
+        I build production-grade Angular applications with clean architecture and real-time features.
+        Based in Port Said, Egypt — open to remote roles worldwide.
+      </p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary">View My Work →</a>
+        <a href="mailto:yasmines.rahim@gmail.com" class="btn btn-outline">Get In Touch</a>
+        <a href="./Yasmine_CV_Professional.pdf" class="btn btn-outline" download="Yasmine_Saad_CV.pdf" target="_blank" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><polyline points="9 15 12 18 15 15"></polyline></svg>
+          Download CV
+        </a>
+      </div>
+    </div>
+    <div>
+      <div class="stat-stack">
+        <div class="stat-card">
+          <div class="stat-num">5+</div>
+          <div class="stat-label">Years of Angular Development</div>
         </div>
-    </nav>
-    <!-- About Section -->
-    <section id="about" class="py-5">
-        <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <p class="lead text-center">
-                I am Yasmine Saad Ahmed, a Junior Frontend Developer with experience in HTML, CSS, JavaScript, Angular, and
-                responsive design. Passionate about creating intuitive and professional user interfaces.
-            </p>
+        <div class="stat-card">
+          <div class="stat-num">6</div>
+          <div class="stat-label">Certifications Completed</div>
         </div>
-    </section>
-    
-    <!-- Skills Section -->
-    <section id="skills" class="py-5 bg-dark">
-        <div class="container">
-            <h2 class="section-title">Skills</h2>
-            <div class="row">
-                <div class="col-md-3 text-center">
-                    <p>HTML</p>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: 90%;" aria-valuenow="90"
-                            aria-valuemin="0" aria-valuemax="100">90%</div>
-                    </div>
-                </div>
-                <div class="col-md-3 text-center">
-                    <p>CSS</p>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: 85%;" aria-valuenow="85"
-                            aria-valuemin="0" aria-valuemax="100">85%</div>
-                    </div>
-                </div>
-                <div class="col-md-3 text-center">
-                    <p>JavaScript</p>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75"
-                            aria-valuemin="0" aria-valuemax="100">75%</div>
-                    </div>
-                </div>
-                <div class="col-md-3 text-center">
-                    <p>Angular</p>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: 70%;" aria-valuenow="70"
-                            aria-valuemin="0" aria-valuemax="100">70%</div>
-                    </div>
-                </div>
-            </div>
+        <div class="stat-card">
+          <div class="stat-num">5+</div>
+          <div class="stat-label">Production-Ready SPAs Delivered</div>
         </div>
-    </section>
-    
-    <!-- Projects Section -->
-    <section id="projects" class="py-5">
-        <div class="container">
-            <h2 class="section-title">Projects</h2>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">E-learning Cart Page</h5>
-                            <p class="card-text">Developed a professional e-learning cart page using Angular and Bootstrap,
-                                similar to Shein's cart design.</p>
-                            <a href="https://yasmine-saad.github.io/E-learning-Cart-Page./" class="btn btn-custom">View Project</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Add more project cards as needed -->
-            </div>
+        <div class="stat-card">
+          <div class="stat-num">98%</div>
+          <div class="stat-label">Accuracy Rate · AI Data Annotation</div>
         </div>
-    </section>
-    
-    <!-- Contact Section -->
-    <section id="contact" class="py-5 bg-dark">
-        <div class="container">
-            <h2 class="section-title">Contact</h2>
-            <form action="mailto:yasmines.rahim@gmail.com" method="POST" enctype="text/plain">
-                <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="name" required>
-                </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" required>
-                </div>
-                <div class="mb-3">
-                    <label for="message" class="form-label">Message</label>
-                    <textarea class="form-control" id="message" rows="5" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-custom">Send Message</button>
-            </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="section-tag">Who I Am</div>
+  <h2>Developer by craft,<br>scientist by training.</h2>
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <p>I'm a <strong>Frontend Angular Developer</strong> with a background most developers don't have — a <em>BSc in Biotechnology & Genetics</em>. This scientific foundation gives me a unique edge when building HealthTech applications: I understand the domain, the data, and the users.</p>
+      <p>Over 5+ years, I've crafted <strong>scalable SPAs</strong> using Angular 21, TypeScript, and RxJS — always following SOLID principles and clean-code practices. I care deeply about both the <em>technical quality</em> of my code and the experience of the people who use it.</p>
+      <p>I'm growing into <strong>Full-Stack development</strong> with ASP.NET Core 8 — FieldLink and the Smart Health KPI Dashboard are both live, working full-stack apps with Clean Architecture backends, not just frontend demos. Open to remote opportunities worldwide.</p>
+    </div>
+    <div class="about-highlights">
+      <div class="highlight-item">
+        <div class="highlight-icon">🧬</div>
+        <div>
+          <div class="highlight-title">HealthTech Domain Expert</div>
+          <div class="highlight-desc">Biotechnology BSc + Healthcare Quality Diploma = rare advantage in medical software development</div>
         </div>
-    </section>
-    <!-- Dark Mode Toggle -->
-    <nav class="navbar navbar-dark bg-dark fixed-bottom">
-        <div class="container">
-            <button class="btn btn-custom" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+      </div>
+      <div class="highlight-item">
+        <div class="highlight-icon">⚡</div>
+        <div>
+          <div class="highlight-title">Angular 21 Specialist</div>
+          <div class="highlight-desc">Signals, Standalone Components, OnPush, Lazy Loading, Guards, Interceptors, JWT Auth</div>
         </div>
-    </nav>
-  
-    <script>
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-        }
-    </script>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    </body>
-    
-    </html>
+      </div>
+      <div class="highlight-item">
+        <div class="highlight-icon">🌍</div>
+        <div>
+          <div class="highlight-title">Remote-First Professional</div>
+          <div class="highlight-desc">8+ years working remotely with international clients and teams across multiple time zones</div>
+        </div>
+      </div>
+      <div class="highlight-item">
+        <div class="highlight-icon">🤖</div>
+        <div>
+          <div class="highlight-title">AI & Prompt Engineering</div>
+          <div class="highlight-desc">Medical AI training data preparation, annotation, and LLM prompt engineering</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section class="section" id="skills">
+  <div class="section-tag">What I Work With</div>
+  <h2>Skills & Technologies</h2>
+  <div class="skills-grid">
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Core — Daily Toolkit</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Angular 21</span><span class="skill-tag">Signals</span><span class="skill-tag">TypeScript</span><span class="skill-tag">RxJS</span><span class="skill-tag">HTML5 / CSS3</span><span class="skill-tag">SCSS</span><span class="skill-tag">Angular Material</span>
+      </div>
+    </div>
+    <div class="skill-group reveal reveal-d1">
+      <div class="skill-group-title">Full-Stack — Shipped in Production</div>
+      <div class="skill-tags">
+        <span class="skill-tag gold">ASP.NET Core 8</span><span class="skill-tag gold">C#</span><span class="skill-tag gold">EF Core</span><span class="skill-tag gold">Clean Architecture</span><span class="skill-tag gold">CQRS / MediatR</span><span class="skill-tag gold">SignalR</span><span class="skill-tag gold">JWT Auth</span><span class="skill-tag gold">FluentValidation</span>
+      </div>
+    </div>
+    <div class="skill-group reveal reveal-d2">
+      <div class="skill-group-title">Tools, AI & Domain</div>
+      <div class="skill-tags">
+        <span class="skill-tag violet">Git & GitHub</span><span class="skill-tag violet">GitHub Pages</span><span class="skill-tag violet">Figma</span><span class="skill-tag violet">Webflow</span><span class="skill-tag violet">Design ⇄ Webflow Conversion</span><span class="skill-tag violet">Postman</span><span class="skill-tag violet">Leaflet Maps</span><span class="skill-tag violet">Chart.js</span><span class="skill-tag violet">AI Prompt Engineering</span><span class="skill-tag violet">Medical AI Annotation</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section class="section" id="projects">
+  <div class="section-tag">What I've Built</div>
+  <h2>Featured Projects</h2>
+  <div class="projects-grid">
+
+    <div class="project-card featured reveal">
+      <div>
+        <div class="project-num">01</div>
+        <div class="project-name-row">
+          <div class="project-name">FieldLink — Smart Service Tracker</div>
+          <span class="project-badge">Full-Stack</span>
+        </div>
+        <p class="project-desc">A customer drops a pin on a map, requests a service, and watches the assigned provider's status update live on a second screen — pushed instantly over SignalR, no polling. Backend follows Clean Architecture with CQRS use cases; frontend runs on Signals behind a Facade service.</p>
+        <div class="project-stack">
+          <span class="stack-tag">Angular 21</span><span class="stack-tag">Signals</span><span class="stack-tag">ASP.NET Core 8</span><span class="stack-tag">Clean Architecture</span><span class="stack-tag">CQRS / MediatR</span><span class="stack-tag">SignalR</span><span class="stack-tag">EF Core</span><span class="stack-tag">Leaflet Maps</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/yasmine-saad/FieldLink-Smart-Services-Tracker" class="project-link" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>Code</a>
+          <a href="https://yasmine-saad.github.io/FieldLink-Smart-Services-Tracker/" class="project-link primary" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>Live Demo</a>
+        </div>
+      </div>
+      <div class="project-metrics">
+        <div class="metric">
+          <div class="metric-icon">🔄</div>
+          <div><div class="metric-value">SignalR</div><div class="metric-desc">Live status pushed instantly, zero polling</div></div>
+        </div>
+        <div class="metric">
+          <div class="metric-icon">🧱</div>
+          <div><div class="metric-value">Clean Arch</div><div class="metric-desc">Domain → Application → Infrastructure → API</div></div>
+        </div>
+        <div class="metric">
+          <div class="metric-icon">⚙️</div>
+          <div><div class="metric-value">CQRS</div><div class="metric-desc">Each use case an isolated MediatR handler</div></div>
+        </div>
+        <div class="metric">
+          <div class="metric-icon">🗺️</div>
+          <div><div class="metric-value">Leaflet</div><div class="metric-desc">Map-based requests + live location tracking</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-num">02</div>
+      <div class="project-name-row">
+        <div class="project-name">Smart Health KPI Dashboard</div>
+        <span class="project-badge">Full-Stack</span>
+      </div>
+      <p class="project-desc">A healthcare KPI dashboard for tracking patient statistics, appointments, and revenue analytics — secured with JWT authentication and role-based access for Admin, Manager, and Viewer roles.</p>
+      <div class="project-stack">
+        <span class="stack-tag">Angular 21</span><span class="stack-tag">ASP.NET Core 8</span><span class="stack-tag">EF Core</span><span class="stack-tag">JWT Auth</span><span class="stack-tag">RBAC</span><span class="stack-tag">Chart.js</span>
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/yasmine-saad/Enterprise-kpi-dashboard" class="project-link" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>Code</a>
+        <a href="https://yasmine-saad.github.io/-Enterprise-kpi-dashboard-demo/" class="project-link primary" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>Live Demo</a>
+      </div>
+    </div>
+
+    <div class="project-card reveal reveal-d1">
+      <div class="project-num">03</div>
+      <div class="project-name-row">
+        <div class="project-name">Learnova — E-Learning Platform</div>
+        <span class="project-badge client">Team Project</span>
+      </div>
+      <p class="project-desc">Graduation project for Digital Egypt Pioneers Initiative. A full e-learning platform with course browsing, enrollment, and progress tracking. <strong style="color:var(--text)">Team of 4</strong> — my role: routing architecture and API integration layer.</p>
+      <div class="project-stack">
+        <span class="stack-tag">Angular</span><span class="stack-tag">TypeScript</span><span class="stack-tag">Bootstrap</span><span class="stack-tag">REST APIs</span>
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/ayaabbas286/Learnova" class="project-link" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>Code</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="projects-subhead reveal">
+    <h3>Learning & Self-Study Projects</h3>
+    <span>Built to study a pattern, not claimed as finished production work</span>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="project-num">04</div>
+      <div class="project-name-row">
+        <div class="project-name">SymptomAI — AI Symptom Checker</div>
+        <span class="project-badge study">Self-Study</span>
+      </div>
+      <p class="project-desc">A self-directed learning project exploring full-stack AI integration for a HealthTech scenario — the user enters symptoms, the backend calls an AI provider through a swappable abstraction, and returns triage guidance. Built to study the Facade and provider-abstraction patterns.</p>
+      <div class="project-stack">
+        <span class="stack-tag">Angular 21</span><span class="stack-tag">ASP.NET Core 8</span><span class="stack-tag">Facade Pattern</span><span class="stack-tag">AI Integration</span>
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/yasmine-saad/smart-symptom-checker" class="project-link" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>Code</a>
+        <a href="https://yasmine-saad.github.io/smart-symptom-checker/" class="project-link primary" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>Live Demo</a>
+      </div>
+    </div>
+
+    <div class="project-card reveal reveal-d1">
+      <div class="project-num">05</div>
+      <div class="project-name-row">
+        <div class="project-name">Dr. Hana Medical Center — Clinic Website</div>
+        <span class="project-badge study">Practice Project</span>
+      </div>
+      <p class="project-desc">A Webflow practice build to train hands-on no-code skills — reusable components, smooth scroll interactions, on-page SEO, and integrated contact and appointment-booking forms for a medical-clinic scenario, tested across devices.</p>
+      <div class="project-stack">
+        <span class="stack-tag">Webflow</span><span class="stack-tag">Responsive Design</span><span class="stack-tag">SEO</span>
+      </div>
+      <div class="project-links">
+        <a href="https://dr-hana-medical-center.webflow.io/" class="project-link primary" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>Live Site</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="projects-subhead reveal">
+    <h3>Freelance & Client Work</h3>
+    <span>Delivered for real clients outside my core Angular/.NET portfolio</span>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="project-num">06</div>
+      <div class="project-name-row">
+        <div class="project-name">ClipForge Studio — About Section</div>
+        <span class="project-badge client">Client Work</span>
+      </div>
+      <p class="project-desc">A responsive "About Us" section built for a creative agency client, sourced through the Freelance Yard platform — hand-coded with plain HTML, CSS, and JavaScript, no framework.</p>
+      <div class="project-stack">
+        <span class="stack-tag">HTML5</span><span class="stack-tag">CSS3</span><span class="stack-tag">JavaScript</span><span class="stack-tag">Responsive Design</span>
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/yasmine-saad/clipforge-studio-about-section" class="project-link" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>Code</a>
+        <a href="https://yasmine-saad.github.io/clipforge-studio-about-section/" class="project-link primary" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>Live Demo</a>
+      </div>
+    </div>
+
+    <div class="project-card reveal reveal-d1">
+      <div class="project-num">07</div>
+      <div class="project-name-row">
+        <div class="project-name">Noon Program — Educational Landing Page</div>
+        <span class="project-badge client">Client Work</span>
+      </div>
+      <p class="project-desc">A marketing landing page for an Arabic-language learning program for kids, built for client Aly Sobehy on WordPress and Elementor.</p>
+      <div class="project-stack">
+        <span class="stack-tag">WordPress</span><span class="stack-tag">Elementor</span><span class="stack-tag">Client Design</span>
+      </div>
+      <div class="project-links">
+        <a href="https://aly-sobehy.com/noon-program/" class="project-link primary" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>Live Site</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EXPERIENCE -->
+<section class="section" id="experience">
+  <div class="section-tag">My Journey</div>
+  <h2>Experience</h2>
+  <div class="reveal">
+    <div class="exp-item">
+      <div class="exp-date"><strong>2021 — Present</strong>Remote · Worldwide</div>
+      <div>
+        <div class="exp-title">Frontend Angular Developer</div>
+        <div class="exp-company">Freelance</div>
+        <ul class="exp-bullets">
+          <li>Delivered <strong>5+ production Angular SPAs</strong> including dashboards, trackers, and e-learning platforms</li>
+          <li>Implemented JWT authentication with <strong>role-based access control</strong>, route guards, and HTTP interceptors</li>
+          <li>Reduced API calls by <strong>~40%</strong> using RxJS operators (debounceTime, switchMap, shareReplay)</li>
+          <li>Applied SOLID principles and modular architecture — <strong>zero critical bugs</strong> post-delivery</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-date"><strong>2022 — Present</strong>Remote · International</div>
+      <div>
+        <div class="exp-title">AI Data Annotator & Prompt Engineer</div>
+        <div class="exp-company">Freelance</div>
+        <ul class="exp-bullets">
+          <li>Annotated medical and clinical datasets using <strong>Biotechnology domain expertise</strong></li>
+          <li>Maintained <strong>>98% accuracy rate</strong> across all tasks for international clients</li>
+          <li>Engineered structured prompts to improve LLM output quality for HealthTech applications</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-date"><strong>2018 — Present</strong>Remote · Global</div>
+      <div>
+        <div class="exp-title">Transcriber & Search Evaluator</div>
+        <div class="exp-company">Crowdgen & Lionbridge</div>
+        <ul class="exp-bullets">
+          <li><strong>6+ years</strong> of high-accuracy work in Arabic and English — remote, deadline-driven</li>
+          <li>Consistently met quality benchmarks across all evaluation projects</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-date"><strong>2014 — 2016</strong>Port Said, Egypt</div>
+      <div>
+        <div class="exp-title">Medical Analysis Specialist</div>
+        <div class="exp-company">Medical Laboratory</div>
+        <ul class="exp-bullets">
+          <li>Conducted PCR, molecular biology, and clinical analysis — foundation for HealthTech expertise</li>
+          <li>Transitioned into tech in 2018, combining scientific rigor with software development</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CERTIFICATIONS -->
+<section class="section" id="certs">
+  <div class="section-tag">Credentials</div>
+  <h2>Education & Certifications</h2>
+  <div class="edu-card reveal">
+    <div class="edu-icon">🎓</div>
+    <div>
+      <div class="edu-title">BSc — Biotechnology & Genetics</div>
+      <div class="edu-sub">Faculty of Science, Port Said University · 2013 · Grade: B</div>
+      <div class="edu-tags">
+        <span class="edu-tag">Molecular Biology</span><span class="edu-tag">Genetics</span><span class="edu-tag">PCR Techniques</span><span class="edu-tag">Cancer Research</span><span class="edu-tag">Healthcare Quality</span>
+      </div>
+    </div>
+  </div>
+  <div class="certs-grid reveal">
+    <a href="./certificates/depi-frontend-development.jpg" target="_blank" class="cert-card">
+      <div class="cert-org">DEPI · Egypt</div>
+      <div class="cert-name">Digital Egypt Pioneers Initiative — Frontend Development Path</div>
+      <span class="cert-badge">Completed</span>
+      <div class="cert-view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>View Certificate</div>
+    </a>
+    <a href="./certificates/alx-ai-career-essentials.jpg" target="_blank" class="cert-card">
+      <div class="cert-org">ALX</div>
+      <div class="cert-name">AI Career Essentials (AiCE)</div>
+      <span class="cert-badge">Completed</span>
+      <div class="cert-view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>View Certificate</div>
+    </a>
+    <a href="./certificates/alx-ai-starter-kit.jpg" target="_blank" class="cert-card">
+      <div class="cert-org">ALX</div>
+      <div class="cert-name">AI Starter Kit</div>
+      <span class="cert-badge">Completed</span>
+      <div class="cert-view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>View Certificate</div>
+    </a>
+    <a href="./certificates/mckinsey-forward-program.jpg" target="_blank" class="cert-card">
+      <div class="cert-org">McKinsey</div>
+      <div class="cert-name">Forward Program — Problem Solving & Communication</div>
+      <span class="cert-badge">Completed</span>
+      <div class="cert-view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>View Certificate</div>
+    </a>
+    <a href="./certificates/itida-gigs-freelance-training.jpg" target="_blank" class="cert-card">
+      <div class="cert-org">ITIDA + eyouth Gigs</div>
+      <div class="cert-name">Freelance Training Program</div>
+      <span class="cert-badge">Completed</span>
+      <div class="cert-view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>View Certificate</div>
+    </a>
+    <div class="cert-card">
+      <div class="cert-org">Healthcare Quality</div>
+      <div class="cert-name">Professional Diploma in Healthcare Quality Management</div>
+      <span class="cert-badge">Completed</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="section-tag">Let's Work Together</div>
+  <h2>Get In Touch</h2>
+  <div class="contact-wrapper reveal">
+    <div>
+      <p class="contact-intro" style="font-size:1rem;color:var(--muted);line-height:1.8;font-weight:300;margin-bottom:32px;">
+        I'm open to <strong style="color:var(--text)">remote full-time</strong> and <strong style="color:var(--text)">freelance opportunities</strong> worldwide — especially in HealthTech, SaaS, and Angular-heavy projects. If you have an interesting role or project, let's talk.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:yasmines.rahim@gmail.com" class="contact-link">
+          <div class="contact-link-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 6-10 7L2 6"></path></svg></div>
+          <div><div class="contact-link-text">yasmines.rahim@gmail.com</div><div class="contact-link-sub">Email — best way to reach me</div></div>
+        </a>
+        <a href="https://www.linkedin.com/in/yasmine-saad-62197772/" class="contact-link linkedin" target="_blank">
+          <div class="contact-link-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002zM7 8.48H3V21h4zM13.5 8.48h-3.83V21h3.83v-6.57c0-3.66 4.76-4 4.76 0V21H22v-7.93c0-6.17-6.87-5.94-8.5-2.91z"/></svg></div>
+          <div><div class="contact-link-text">linkedin.com/in/yasmine-saad</div><div class="contact-link-sub">LinkedIn — connect with me</div></div>
+        </a>
+        <a href="https://github.com/yasmine-saad" class="contact-link github" target="_blank">
+          <div class="contact-link-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.57.1.78-.25.78-.55 0-.27-.01-1-.02-1.96-3.2.7-3.88-1.54-3.88-1.54-.52-1.34-1.28-1.7-1.28-1.7-1.04-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.24 2.76.12 3.05.74.8 1.19 1.83 1.19 3.09 0 4.43-2.69 5.41-5.25 5.69.41.36.78 1.08.78 2.17 0 1.57-.01 2.83-.01 3.22 0 .31.2.66.79.55A11.5 11.5 0 0 0 23.5 12c0-6.27-5.23-11.5-11.5-11.5z"/></svg></div>
+          <div><div class="contact-link-text">github.com/yasmine-saad</div><div class="contact-link-sub">GitHub — see my code</div></div>
+        </a>
+        <a href="https://wa.me/201095304918" class="contact-link whatsapp" target="_blank">
+          <div class="contact-link-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.85.5 3.58 1.36 5.07L2 22l5.25-1.38c1.43.78 3.06 1.22 4.79 1.22 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.78 14.11c-.25.7-1.25 1.29-2.03 1.46-.55.12-1.26.21-3.65-.78-3.07-1.27-5.04-4.38-5.19-4.58-.15-.2-1.24-1.65-1.24-3.15 0-1.5.79-2.24 1.07-2.54.28-.3.61-.37.81-.37.2 0 .4 0 .58.01.19.01.43-.07.68.52.25.6.85 2.08.92 2.23.07.15.12.33.02.53-.1.2-.15.33-.3.5-.15.18-.31.4-.44.53-.15.15-.3.31-.13.61.17.3.76 1.25 1.64 2.02 1.13.99 2.08 1.3 2.38 1.45.3.15.48.13.65-.07.18-.2.75-.87.95-1.17.2-.3.4-.25.68-.15.28.1 1.77.83 2.07.98.3.15.5.22.57.35.07.13.07.72-.18 1.42z"/></svg></div>
+          <div><div class="contact-link-text">+20 109 530 4918</div><div class="contact-link-sub">WhatsApp · Port Said, Egypt</div></div>
+        </a>
+      </div>
+
+      <div class="platform-heading">Also Find Me On</div>
+      <div class="platform-row">
+        <a href="https://www.upwork.com/freelancers/~017e377993098c04ee" class="platform-badge" target="_blank" title="Upwork">
+          <div class="platform-badge-circle">Up</div>
+          <div class="platform-badge-label">Upwork</div>
+        </a>
+        <a href="https://www.freelancer.com/u/yassmin21" class="platform-badge" target="_blank" title="Freelancer.com">
+          <div class="platform-badge-circle">Fr</div>
+          <div class="platform-badge-label">Freelancer</div>
+        </a>
+        <a href="https://contra.com/yasmine_saad_aczpcv2r/work?r=yasmine_saad_aczpcv2r" class="platform-badge" target="_blank" title="Contra">
+          <div class="platform-badge-circle">Co</div>
+          <div class="platform-badge-label">Contra</div>
+        </a>
+        <a href="https://freelanceyard.com/en/account/profile" class="platform-badge" target="_blank" title="Freelance Yard">
+          <div class="platform-badge-circle">FY</div>
+          <div class="platform-badge-label">Freelance Yard</div>
+        </a>
+      </div>
+    </div>
+    <form class="contact-form" onsubmit="handleSubmit(event)">
+      <div class="form-group">
+        <label class="form-label">Your Name</label>
+        <input type="text" class="form-input" placeholder="John Smith" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-input" placeholder="john@company.com" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Message</label>
+        <textarea class="form-textarea" placeholder="Tell me about your project or opportunity..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary" style="cursor:pointer;">Send Message →</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-copy">© 2026 Yasmine Saad Ahmed · Angular Developer · Port Said, Egypt</div>
+    <div class="footer-social">
+      <a href="https://github.com/yasmine-saad" class="social-link" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.57.1.78-.25.78-.55 0-.27-.01-1-.02-1.96-3.2.7-3.88-1.54-3.88-1.54-.52-1.34-1.28-1.7-1.28-1.7-1.04-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.24 2.76.12 3.05.74.8 1.19 1.83 1.19 3.09 0 4.43-2.69 5.41-5.25 5.69.41.36.78 1.08.78 2.17 0 1.57-.01 2.83-.01 3.22 0 .31.2.66.79.55A11.5 11.5 0 0 0 23.5 12c0-6.27-5.23-11.5-11.5-11.5z"/></svg>GitHub</a>
+      <a href="https://www.linkedin.com/in/yasmine-saad-62197772/" class="social-link" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002zM7 8.48H3V21h4zM13.5 8.48h-3.83V21h3.83v-6.57c0-3.66 4.76-4 4.76 0V21H22v-7.93c0-6.17-6.87-5.94-8.5-2.91z"/></svg>LinkedIn</a>
+      <a href="https://wa.me/201095304918" class="social-link" target="_blank"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.85.5 3.58 1.36 5.07L2 22l5.25-1.38c1.43.78 3.06 1.22 4.79 1.22 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.78 14.11c-.25.7-1.25 1.29-2.03 1.46-.55.12-1.26.21-3.65-.78-3.07-1.27-5.04-4.38-5.19-4.58-.15-.2-1.24-1.65-1.24-3.15 0-1.5.79-2.24 1.07-2.54.28-.3.61-.37.81-.37.2 0 .4 0 .58.01.19.01.43-.07.68.52.25.6.85 2.08.92 2.23.07.15.12.33.02.53-.1.2-.15.33-.3.5-.15.18-.31.4-.44.53-.15.15-.3.31-.13.61.17.3.76 1.25 1.64 2.02 1.13.99 2.08 1.3 2.38 1.45.3.15.48.13.65-.07.18-.2.75-.87.95-1.17.2-.3.4-.25.68-.15.28.1 1.77.83 2.07.98.3.15.5.22.57.35.07.13.07.72-.18 1.42z"/></svg>WhatsApp</a>
+      <a href="mailto:yasmines.rahim@gmail.com" class="social-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 6-10 7L2 6"></path></svg>Email</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Theme toggle — dark is default; choice persists via localStorage
+  const themeToggle = document.getElementById('themeToggle');
+  themeToggle.addEventListener('click', () => {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    const next = isLight ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('ys-theme', next);
+  });
+
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const p = document.getElementById('progress');
+    p.style.width = (window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100) + '%';
+  });
+
+  // Reveal on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Form
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.textContent = 'Message Sent ✓';
+    btn.style.background = '#10b981';
+    btn.style.boxShadow = '0 0 28px rgba(16,185,129,0.3)';
+    setTimeout(() => {
+      btn.textContent = 'Send Message →';
+      btn.style.background = '';
+      btn.style.boxShadow = '';
+      e.target.reset();
+    }, 3000);
+  }
+</script>
+</body>
+</html>
